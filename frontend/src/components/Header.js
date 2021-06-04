@@ -54,7 +54,7 @@ function Header() {
         <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
           <Container>
             <LinkContainer to="/">
-              <Navbar.Brand>SiteName</Navbar.Brand>
+              <Navbar.Brand>Authentication</Navbar.Brand>
             </LinkContainer>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -72,10 +72,10 @@ function Header() {
                           <i className="far fa-id-card"></i> Profile
                         </NavDropdown.Item>
                       </LinkContainer>
-                      <NavDropdown.Item onClick={logoutHandler}>
-                        <i className="fas fa-sign-out-alt"></i> Logout
-                      </NavDropdown.Item>
                     </NavDropdown>
+                    <Nav.Link onClick={logoutHandler}>
+                      <i className="fas fa-sign-out-alt"></i> Logout
+                    </Nav.Link>
                   </Fragment>
                 ) : (
                   <Fragment>

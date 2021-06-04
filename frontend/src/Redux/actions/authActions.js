@@ -27,6 +27,41 @@ import {
 } from "../constants/authConstant";
 import axios from "axios";
 
+export const loadUserData = () => async (dispatch) => {
+  let accessToken = localStorage.getItem("access");
+  if (accessToken) {
+    accessToken = accessToken.replace('"', "");
+    accessToken = accessToken.replace('"', "");
+    dispatch({ type: USER_LOAD_REQUEST });
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `JWT ${accessToken}`,
+      },
+    };
+    try {
+      const { data } = await axios.get(`/api/auth/users/me/`, config);
+      dispatch({
+        type: USER_LOAD_SUCCESS,
+        payload: data,
+      });
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_LOAD_FAIL,
+        payload:
+          error.response.statusText && error.response.data.detail
+            ? error.response.data.detail
+            : error.response.statusText,
+      });
+    }
+  } else {
+    dispatch({
+      type: USER_LOAD_FAIL,
+    });
+  }
+};
+
 export const facebookAuthenticate = (state, code) => async (dispatch) => {
   if (state && code && !localStorage.getItem("access")) {
     const config = {
@@ -164,42 +199,6 @@ export const passwordReset = (email) => async (dispatch) => {
         error.response.statusText && error.response.data.detail
           ? error.response.data.detail
           : error.response.statusText,
-    });
-  }
-};
-
-export const loadUserData = () => async (dispatch) => {
-  let accessToken = localStorage.getItem("access");
-  if (accessToken) {
-    accessToken = accessToken.replace('"', "");
-    accessToken = accessToken.replace('"', "");
-    dispatch({ type: USER_LOAD_REQUEST });
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `JWT ${accessToken}`,
-      },
-    };
-    try {
-      const { data } = await axios.get(`/api/auth/users/me/`, config);
-
-      dispatch({
-        type: USER_LOAD_SUCCESS,
-        payload: data,
-      });
-      localStorage.setItem("userInfo", JSON.stringify(data));
-    } catch (error) {
-      dispatch({
-        type: USER_LOAD_FAIL,
-        payload:
-          error.response.statusText && error.response.data.detail
-            ? error.response.data.detail
-            : error.response.statusText,
-      });
-    }
-  } else {
-    dispatch({
-      type: USER_LOAD_FAIL,
     });
   }
 };
