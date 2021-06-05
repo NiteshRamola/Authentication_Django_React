@@ -2,7 +2,7 @@
 
 * This is a project that demonstrates how you could implement a fully featured JSON Web Token Authentication system in Django and React.
 
-![DEMO](./ProjectScreenshots/Login.png)
+![DEMO](./ProjectScreenShots/Login.png)
 
 # Features
 
