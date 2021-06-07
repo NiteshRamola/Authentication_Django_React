@@ -6,7 +6,7 @@
 
 # Features
 
-* Account Creation with verifing email id
+* Account Creation with verifying email id
 * Account activation
 * Password Reset using email id
 * Social Authentication
